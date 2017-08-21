@@ -1,0 +1,6 @@
+﻿Storm Reports
+	updated every 10 minutes
+	wind, hail, tornado
+Warnings
+Watches?
+Forecast Discussions
