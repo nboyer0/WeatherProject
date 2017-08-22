@@ -87,6 +87,8 @@ namespace WeatherRadar
                     marker.ToolTip.Stroke = Pens.Transparent;
                     marker.ToolTip.Foreground = Brushes.Black;
                     marker.ToolTip.TextPadding = new Size(20, 0);
+                    //Point relative to local corrdinates
+                    marker.ToolTip.Offset = new Point(-10, -10);
                     marker.Tag = dr[0].ToString();
                     // new Bitmap("c:\images\mymarker.png");
                     stationMarkers.Markers.Add(marker);
