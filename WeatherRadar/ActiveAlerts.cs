@@ -8,11 +8,13 @@ using System.Drawing;
 using System.Net;
 using System.Xml;
 using System.Diagnostics;
-using GMap.NET;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Xml;
 using System.Xml.XPath;
+using GMap.NET;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
+using GMap.NET.MapProviders;
 
 
 
@@ -20,8 +22,9 @@ namespace WeatherRadar
 {
     class ActiveAlerts
     {
-
-
+        public GMapOverlay activeAlertsOverlay = new GMapOverlay("activeAlertsOverlay");
+        //Temp Color
+        Color warningColor = Color.Red;
 
         public ActiveAlerts()
         {
@@ -31,85 +34,66 @@ namespace WeatherRadar
 
 
 
-        public void Testshit()
+        public void getAlerts()
         {
-            //XmlReader reader;
+            //puts all current alerts into datatable
             XmlDocument xml = new XmlDocument();
             string test;
             string rawAlertString;
-
             using (WebClient client = new WebClient())
-            {
+            {   
                 client.Headers.Add("user-agent", "MyRSSReader/1.0");
                 rawAlertString = client.DownloadString("https://alerts.weather.gov/cap/us.atom");
-                var arr = Regex.Matches(rawAlertString, @"<entry>[\w|\W]*</entry>").Cast<Match>().Select(m => m.Value).ToArray();
-                test = arr[0];
+            }
+            DataSet otherdataset = new DataSet();
+            otherdataset.ReadXml(new StringReader(rawAlertString));
+
+
+           DataTable alertsTable = otherdataset.Tables[3];
+           foreach(DataRow testrow in alertsTable.Rows)
+            {
+                if(testrow["category"].ToString()=="Met")
+                    {
+                    if (testrow["polygon"].ToString() != "")
+                    {
+
+                        List<PointLatLng> points = new List<PointLatLng>();
+                        String tempPoints = testrow["polygon"].ToString();
+                        string[] polygonSeperator = { " ", "," };
+                        string[] spiltPoints = tempPoints.Split(polygonSeperator, StringSplitOptions.RemoveEmptyEntries);
+                        for (int i =0; i < spiltPoints.Length; i+=2)
+                        {
+                            points.Add(new PointLatLng(Convert.ToDouble(spiltPoints[i]), Convert.ToDouble(spiltPoints[i+1])));
+                        }
+
+                        Debug.WriteLine(testrow["category"]);
+                        Debug.WriteLine(testrow["polygon"]);
+
+
+
+                        
+                       GMapPolygon polygon = new GMapPolygon(points, "warning");
+                       polygon.Stroke = new Pen(warningColor, 3);
+                       polygon.Fill = new SolidBrush(Color.Transparent);
+                       activeAlertsOverlay.Polygons.Add(polygon);
+
+                    }
+                }
+
+
+
+
 
             }
 
 
-            //nsmgr.AddNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-
-            StringReader stringReader = new StringReader(test);
-            DataSet otherdataset = new DataSet();
-
-            //Invalid URI: The Uri string is too long.'
-            /*
-            otherdataset.ReadXml(rawAlertString);
-
-        
-
-            XmlReader testReader = XmlReader.Create(test); 
-            DataSet alertDataSet = new DataSet();
-            alertDataSet.ReadXmlSchema(testReader);
-           
-           DataRow testRow = alertDataSet.Tables[0].Rows[0];
-           Debug.WriteLine(testRow["title"]);
-           */
-
-            //old method
-            /*
-            WebClient webClient = new WebClient();
-            webClient.Headers.Add("user-agent", "MyRSSReader/1.0");
-            XmlReader reader = XmlReader.Create(webClient.OpenRead("https://alerts.weather.gov/cap/us.atom"));
-
-            Debug.WriteLine(reader);
-            DataSet alertDataSet = new DataSet();
-            alertDataSet.ReadXml(reader);
-            DataRow testrow = alertDataSet.Tables[0].Rows[0];
-            Debug.WriteLine(testrow[0]);
-
-            */
-
-            //Debug.WriteLine(testrow["entry"]);
-
-
-            //xpath method
-            /*
-            XPathNavigator nav;
-            XPathDocument docNav;
-            XPathNodeIterator NodeIter;
-            String strExpression;
-
-
-            WebClient webClient = new WebClient();
-            webClient.Headers.Add("user-agent", "MyRSSReader/1.0");
-            XmlReader reader = XmlReader.Create(webClient.OpenRead("https://alerts.weather.gov/cap/us.atom"));
-            docNav = new XPathDocument(reader);
-            nav = docNav.CreateNavigator();
-            strExpression = "count(/child)";
-            Debug.WriteLine("test {0}", nav.Evaluate(strExpression));
-           // Debug.WriteLine(nav.ToString());
-
-    */
-
-            // dataSet.Tables[0];
-
-
-
-
-
+            //polygon grid to add bases to
+            //event is type of warning
+            //Enum type base on warning, color of polygon added based on enum type
+            //polygon - gps corrdin in lat , lon - put to string and delim by , or space
             //xmlFile.Close();
+
+            //onclick pop up window detailing warning
 
 
         }

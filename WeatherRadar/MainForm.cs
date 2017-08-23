@@ -96,8 +96,8 @@ namespace WeatherRadar
             }
             gmap.Overlays.Add(stationMarkers);
 
-            StormReport testReport = new StormReport();
 
+            StormReport testReport = new StormReport();
 
             //test code
             testReport.testShit();
@@ -109,8 +109,9 @@ namespace WeatherRadar
 
 
             ActiveAlerts alerts = new ActiveAlerts();
-            alerts.Testshit();
-        
+            //Run every 2 minutes?
+            alerts.getAlerts();
+            gmap.Overlays.Add(alerts.activeAlertsOverlay);
 
 
 
