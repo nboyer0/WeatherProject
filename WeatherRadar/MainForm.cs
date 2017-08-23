@@ -33,7 +33,7 @@ namespace WeatherRadar
         bool Day3Outlook = false;
 
         OutlookGrid TSTMGrid, MRGLGrid, SLGTGrid, ENHGrid, MDTGrid, HIGHGrid;
-
+        ActiveAlerts alerts = new ActiveAlerts();
 
 
         public MainForm()
@@ -106,9 +106,7 @@ namespace WeatherRadar
             gmap.Overlays.Add(testReport.WindReportMarkers);
 
 
-
-
-            ActiveAlerts alerts = new ActiveAlerts();
+            
             //Run every 2 minutes?
             alerts.getAlerts();
             gmap.Overlays.Add(alerts.activeAlertsOverlay);
@@ -229,7 +227,7 @@ namespace WeatherRadar
             gmap.Zoom = 9;
             //set active radar
         }
-
+        
 
         public void setLocation(double x, double y)
         {
@@ -300,6 +298,23 @@ namespace WeatherRadar
         {
             RadarSiteChoose sitechooose = new RadarSiteChoose(this);
             sitechooose.Show(); 
+        }
+
+        private void gmap_OnPolygonClick(GMapPolygon item, MouseEventArgs e)
+        {
+            //check type of polygon
+            //alerts.activeAlertsOverlay
+            DataRow selectedAlertPolygon = null;
+            foreach (DataRow testrow in alerts.alertsTable.Rows)
+            {
+                if (testrow[3].ToString() == item.Name)
+                {
+                    selectedAlertPolygon = testrow;
+                }
+            }
+            AlertPopup temp = new AlertPopup(selectedAlertPolygon);
+            temp.Show();
+
         }
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)

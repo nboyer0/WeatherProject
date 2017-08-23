@@ -39,15 +39,15 @@
             this.wichitaKSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kansasCityKSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseSiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.outlooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dayToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
-            this.outlooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dayToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -137,6 +137,37 @@
             this.chooseSiteToolStripMenuItem.Text = "Choose Site";
             this.chooseSiteToolStripMenuItem.Click += new System.EventHandler(this.chooseSiteToolStripMenuItem_Click);
             // 
+            // outlooksToolStripMenuItem
+            // 
+            this.outlooksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dayToolStripMenuItem,
+            this.dayToolStripMenuItem1,
+            this.dayToolStripMenuItem2});
+            this.outlooksToolStripMenuItem.Name = "outlooksToolStripMenuItem";
+            this.outlooksToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
+            this.outlooksToolStripMenuItem.Text = "Outlooks";
+            // 
+            // dayToolStripMenuItem
+            // 
+            this.dayToolStripMenuItem.Name = "dayToolStripMenuItem";
+            this.dayToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
+            this.dayToolStripMenuItem.Text = "1 Day Outlook";
+            this.dayToolStripMenuItem.Click += new System.EventHandler(this.dayToolStripMenuItem_Click);
+            // 
+            // dayToolStripMenuItem1
+            // 
+            this.dayToolStripMenuItem1.Name = "dayToolStripMenuItem1";
+            this.dayToolStripMenuItem1.Size = new System.Drawing.Size(179, 26);
+            this.dayToolStripMenuItem1.Text = "2 Day Outlook";
+            this.dayToolStripMenuItem1.Click += new System.EventHandler(this.dayToolStripMenuItem1_Click);
+            // 
+            // dayToolStripMenuItem2
+            // 
+            this.dayToolStripMenuItem2.Name = "dayToolStripMenuItem2";
+            this.dayToolStripMenuItem2.Size = new System.Drawing.Size(179, 26);
+            this.dayToolStripMenuItem2.Text = "3 Day Outlook";
+            this.dayToolStripMenuItem2.Click += new System.EventHandler(this.dayToolStripMenuItem2_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -206,38 +237,8 @@
             this.gmap.TabIndex = 0;
             this.gmap.Zoom = 8D;
             this.gmap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
+            this.gmap.OnPolygonClick += new GMap.NET.WindowsForms.PolygonClick(this.gmap_OnPolygonClick);
             this.gmap.Load += new System.EventHandler(this.gMapControl1_Load);
-            // 
-            // outlooksToolStripMenuItem
-            // 
-            this.outlooksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dayToolStripMenuItem,
-            this.dayToolStripMenuItem1,
-            this.dayToolStripMenuItem2});
-            this.outlooksToolStripMenuItem.Name = "outlooksToolStripMenuItem";
-            this.outlooksToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
-            this.outlooksToolStripMenuItem.Text = "Outlooks";
-            // 
-            // dayToolStripMenuItem
-            // 
-            this.dayToolStripMenuItem.Name = "dayToolStripMenuItem";
-            this.dayToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.dayToolStripMenuItem.Text = "1 Day Outlook";
-            this.dayToolStripMenuItem.Click += new System.EventHandler(this.dayToolStripMenuItem_Click);
-            // 
-            // dayToolStripMenuItem1
-            // 
-            this.dayToolStripMenuItem1.Name = "dayToolStripMenuItem1";
-            this.dayToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
-            this.dayToolStripMenuItem1.Text = "2 Day Outlook";
-            this.dayToolStripMenuItem1.Click += new System.EventHandler(this.dayToolStripMenuItem1_Click);
-            // 
-            // dayToolStripMenuItem2
-            // 
-            this.dayToolStripMenuItem2.Name = "dayToolStripMenuItem2";
-            this.dayToolStripMenuItem2.Size = new System.Drawing.Size(181, 26);
-            this.dayToolStripMenuItem2.Text = "3 Day Outlook";
-            this.dayToolStripMenuItem2.Click += new System.EventHandler(this.dayToolStripMenuItem2_Click);
             // 
             // MainForm
             // 

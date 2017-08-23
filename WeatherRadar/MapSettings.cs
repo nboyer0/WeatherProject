@@ -20,6 +20,8 @@ namespace WeatherRadar
         {
                 Main = a;
                 InitializeComponent();
+                mapCmbox.SelectedIndex = 1;
+                accessCmbox.SelectedIndex = 1;
         }
 
         private void MapSettings_Load(object sender, EventArgs e)
