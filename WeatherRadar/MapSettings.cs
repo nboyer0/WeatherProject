@@ -27,6 +27,7 @@ namespace WeatherRadar
         private void MapSettings_Load(object sender, EventArgs e)
         {
 
+
         }
 
         private void saveBtn_Click(object sender, EventArgs e)

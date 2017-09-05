@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,12 +43,13 @@
             this.dayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dayToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
+            this.WindcheckBox1 = new System.Windows.Forms.CheckBox();
+            this.HailcheckBox = new System.Windows.Forms.CheckBox();
+            this.TornadocheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -171,44 +171,23 @@
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1902, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1902, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton2.Text = "toolStripButton2";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 53);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gmap);
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(1902, 956);
+            this.splitContainer1.Size = new System.Drawing.Size(1902, 958);
             this.splitContainer1.SplitterDistance = 306;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -240,11 +219,63 @@
             this.gmap.OnPolygonClick += new GMap.NET.WindowsForms.PolygonClick(this.gmap_OnPolygonClick);
             this.gmap.Load += new System.EventHandler(this.gMapControl1_Load);
             // 
+            // WindcheckBox1
+            // 
+            this.WindcheckBox1.AutoSize = true;
+            this.WindcheckBox1.Checked = true;
+            this.WindcheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.WindcheckBox1.Location = new System.Drawing.Point(117, 31);
+            this.WindcheckBox1.Name = "WindcheckBox1";
+            this.WindcheckBox1.Size = new System.Drawing.Size(62, 21);
+            this.WindcheckBox1.TabIndex = 4;
+            this.WindcheckBox1.Text = "Wind";
+            this.WindcheckBox1.UseVisualStyleBackColor = true;
+            this.WindcheckBox1.CheckedChanged += new System.EventHandler(this.WindcheckBox1_CheckedChanged);
+            // 
+            // HailcheckBox
+            // 
+            this.HailcheckBox.AutoSize = true;
+            this.HailcheckBox.Checked = true;
+            this.HailcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.HailcheckBox.Location = new System.Drawing.Point(185, 31);
+            this.HailcheckBox.Name = "HailcheckBox";
+            this.HailcheckBox.Size = new System.Drawing.Size(54, 21);
+            this.HailcheckBox.TabIndex = 5;
+            this.HailcheckBox.Text = "Hail";
+            this.HailcheckBox.UseVisualStyleBackColor = true;
+            this.HailcheckBox.CheckStateChanged += new System.EventHandler(this.HailcheckBox_CheckStateChanged);
+            // 
+            // TornadocheckBox
+            // 
+            this.TornadocheckBox.AutoSize = true;
+            this.TornadocheckBox.Checked = true;
+            this.TornadocheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TornadocheckBox.Location = new System.Drawing.Point(245, 31);
+            this.TornadocheckBox.Name = "TornadocheckBox";
+            this.TornadocheckBox.Size = new System.Drawing.Size(84, 21);
+            this.TornadocheckBox.TabIndex = 6;
+            this.TornadocheckBox.Text = "Tornado";
+            this.TornadocheckBox.UseVisualStyleBackColor = true;
+            this.TornadocheckBox.CheckStateChanged += new System.EventHandler(this.TornadocheckBox_CheckStateChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 17);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Storm Reports";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1902, 1033);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TornadocheckBox);
+            this.Controls.Add(this.HailcheckBox);
+            this.Controls.Add(this.WindcheckBox1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -254,8 +285,6 @@
             this.Text = "Weather Radar";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -272,8 +301,6 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem siteToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem wichitaKSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kansasCityKSToolStripMenuItem;
@@ -285,6 +312,10 @@
         private System.Windows.Forms.ToolStripMenuItem dayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dayToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem dayToolStripMenuItem2;
+        private System.Windows.Forms.CheckBox WindcheckBox1;
+        private System.Windows.Forms.CheckBox HailcheckBox;
+        private System.Windows.Forms.CheckBox TornadocheckBox;
+        private System.Windows.Forms.Label label1;
     }
 }
 

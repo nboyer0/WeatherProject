@@ -126,7 +126,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="testradarimage.gif" />
+    <Content Include="images\hailicon.png" />
+    <Content Include="images\hailicon100.png" />
+    <Content Include="images\hailicon125.png" />
+    <Content Include="images\hailicon150.png" />
+    <Content Include="images\hailicon175.png" />
+    <Content Include="images\hailicon200.png" />
+    <Content Include="images\hailicon225.png" />
+    <Content Include="images\hailicon250.png" />
+    <Content Include="images\hailicon275.png" />
+    <Content Include="images\hailicon300.png" />
+    <Content Include="images\hailicon400.png" />
+    <Content Include="images\hailicon500.png" />
+    <Content Include="images\radaricon.png" />
+    <Content Include="images\toricon.png" />
+    <Content Include="images\windicon.png" />
+    <Content Include="images\windicon100.png" />
+    <Content Include="images\windicon60.png" />
+    <Content Include="images\windicon70.png" />
+    <Content Include="images\windicon80.png" />
+    <Content Include="images\windicon90.png" />
     <Content Include="ToDo.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

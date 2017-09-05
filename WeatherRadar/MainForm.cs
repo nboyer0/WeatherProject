@@ -33,6 +33,7 @@ namespace WeatherRadar
         bool Day3Outlook = false;
 
         OutlookGrid TSTMGrid, MRGLGrid, SLGTGrid, ENHGrid, MDTGrid, HIGHGrid;
+        StormReport storms;
         ActiveAlerts alerts = new ActiveAlerts();
 
 
@@ -51,9 +52,9 @@ namespace WeatherRadar
         private void gMapControl1_Load(object sender, EventArgs e)
         {
 
-            gmap.MapProvider = BingMapProvider.Instance;
+            gmap.MapProvider = GoogleMapProvider.Instance;
             //change to server and local cache in the future
-            GMaps.Instance.Mode = AccessMode.ServerOnly;
+            GMaps.Instance.Mode = AccessMode.ServerAndCache;
             //allow user to set this value in the future
             //for setting position on top of radar sites
             //gmap.Position = new GMap.NET.PointLatLng(48.8589507, 2.2775175);
@@ -73,14 +74,15 @@ namespace WeatherRadar
             xmlFile.Close();
 
             GMapOverlay stationMarkers = new GMapOverlay("stationMarkers");
-          //Possibly only show station markers for stations within a certain distance of the active radar.
+            Image stationImage = Image.FromFile("C:\\Users\\Boyer\\documents\\visual studio 2017\\Projects\\WeatherRadar\\WeatherRadar\\images\\radaricon.png");
+            //Possibly only show station markers for stations within a certain distance of the active radar.
             foreach (DataTable table in radarSiteDataSet.Tables)
             {
                 foreach (DataRow dr in table.Rows)
                 {
                     GMapMarker marker = new GMarkerGoogle(
                        new PointLatLng(Convert.ToDouble(dr[3]), Convert.ToDouble(dr[4])),
-                       GMarkerGoogleType.blue);
+                       new Bitmap(stationImage, 15, 15));
                     marker.ToolTipText = dr[0].ToString();
                     marker.ToolTipMode = MarkerTooltipMode.Always;
                     marker.ToolTip.Fill = Brushes.Transparent;
@@ -97,13 +99,13 @@ namespace WeatherRadar
             gmap.Overlays.Add(stationMarkers);
 
 
-            StormReport testReport = new StormReport();
-
+            storms = new StormReport();
+    
             //test code
-            testReport.testShit();
-            gmap.Overlays.Add(testReport.HailReportMarkers);
-            gmap.Overlays.Add(testReport.TornadoReportMarkers);
-            gmap.Overlays.Add(testReport.WindReportMarkers);
+            storms.testShit();
+            gmap.Overlays.Add(storms.HailReportMarkers);
+            gmap.Overlays.Add(storms.TornadoReportMarkers);
+            gmap.Overlays.Add(storms.WindReportMarkers);
 
 
             
@@ -315,6 +317,42 @@ namespace WeatherRadar
             AlertPopup temp = new AlertPopup(selectedAlertPolygon);
             temp.Show();
 
+        }
+
+        private void TornadocheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            if(TornadocheckBox.Checked)
+            {
+                storms.TornadoReportMarkers.IsVisibile = true;
+            }
+            else
+            {
+                storms.TornadoReportMarkers.IsVisibile = false;
+            }
+        }
+
+        private void HailcheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            if(HailcheckBox.Checked)
+            {
+                storms.HailReportMarkers.IsVisibile = true;
+            }
+            else
+            {
+                storms.HailReportMarkers.IsVisibile = false;
+            }
+        }
+
+        private void WindcheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(WindcheckBox1.Checked)
+            {
+                storms.WindReportMarkers.IsVisibile = true;
+            }
+            else
+            {
+                storms.WindReportMarkers.IsVisibile = false;
+            }
         }
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
