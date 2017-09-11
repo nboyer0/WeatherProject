@@ -49,6 +49,8 @@
             this.HailcheckBox = new System.Windows.Forms.CheckBox();
             this.TornadocheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.flightLbl = new System.Windows.Forms.Label();
+            this.ksuCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -170,6 +172,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
@@ -267,11 +270,34 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Storm Reports";
             // 
+            // flightLbl
+            // 
+            this.flightLbl.AutoSize = true;
+            this.flightLbl.Location = new System.Drawing.Point(335, 32);
+            this.flightLbl.Name = "flightLbl";
+            this.flightLbl.Size = new System.Drawing.Size(100, 17);
+            this.flightLbl.TabIndex = 8;
+            this.flightLbl.Text = "Current Flights";
+            // 
+            // ksuCheckBox
+            // 
+            this.ksuCheckBox.AutoSize = true;
+            this.ksuCheckBox.BackColor = System.Drawing.SystemColors.Control;
+            this.ksuCheckBox.Location = new System.Drawing.Point(441, 31);
+            this.ksuCheckBox.Name = "ksuCheckBox";
+            this.ksuCheckBox.Size = new System.Drawing.Size(93, 21);
+            this.ksuCheckBox.TabIndex = 9;
+            this.ksuCheckBox.Text = "KSU Fleet";
+            this.ksuCheckBox.UseVisualStyleBackColor = false;
+            this.ksuCheckBox.CheckStateChanged += new System.EventHandler(this.ksuCheckBox_CheckStateChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1902, 1033);
+            this.Controls.Add(this.ksuCheckBox);
+            this.Controls.Add(this.flightLbl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.TornadocheckBox);
             this.Controls.Add(this.HailcheckBox);
@@ -316,6 +342,8 @@
         private System.Windows.Forms.CheckBox HailcheckBox;
         private System.Windows.Forms.CheckBox TornadocheckBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label flightLbl;
+        private System.Windows.Forms.CheckBox ksuCheckBox;
     }
 }
 

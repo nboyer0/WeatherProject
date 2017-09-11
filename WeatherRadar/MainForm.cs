@@ -35,7 +35,7 @@ namespace WeatherRadar
         OutlookGrid TSTMGrid, MRGLGrid, SLGTGrid, ENHGrid, MDTGrid, HIGHGrid;
         StormReport storms;
         ActiveAlerts alerts = new ActiveAlerts();
-
+        PlaneLocations planes = new PlaneLocations();
 
         public MainForm()
         {
@@ -113,9 +113,8 @@ namespace WeatherRadar
             alerts.getAlerts();
             gmap.Overlays.Add(alerts.activeAlertsOverlay);
 
-
-
-
+            
+            
             /*
             GMapOverlay testMarker = new GMapOverlay("testMarker");
             GMapMarker testmarker = new GMarkerGoogle(
@@ -353,6 +352,21 @@ namespace WeatherRadar
             {
                 storms.WindReportMarkers.IsVisibile = false;
             }
+        }
+
+        private void ksuCheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+
+            if(ksuCheckBox.Checked)
+            {
+                planes.getPlaneLocations();
+            }
+            else
+            {
+
+
+            }
+
         }
 
         private void mapToolStripMenuItem_Click(object sender, EventArgs e)
