@@ -36,7 +36,7 @@ namespace WeatherRadar
         StormReport storms;
         ActiveAlerts alerts = new ActiveAlerts();
         PlaneLocations planes = new PlaneLocations();
-
+       
         public MainForm()
         {
             InitializeComponent();
@@ -361,11 +361,12 @@ namespace WeatherRadar
             if(ksuCheckBox.Checked)
             {
                 planes.getPlaneLocations();
+                gmap.Overlays.Add(planes.PlaneMarkers);
             }
             else
             {
-
-
+                gmap.Overlays.Remove(planes.PlaneMarkers);
+                planes.PlaneMarkers.Clear();
             }
 
         }

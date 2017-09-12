@@ -162,9 +162,9 @@ namespace WeatherRadar
                 Image windImage100 = Image.FromFile("C:\\Users\\Boyer\\documents\\visual studio 2017\\Projects\\WeatherRadar\\WeatherRadar\\images\\windicon100.png");
                 for (int i = 8; i < windAmount; i += 8)
                 {
+                    
                     Image curImage;
                     //Time,Speed,Location,County,State,Lat,Lon,Comments
-                    Debug.WriteLine(windReport[i + 1]);
                     //double curspeed = Convert.ToDouble(windReport[i + 1]);
                     int curspeed;
                     int number;

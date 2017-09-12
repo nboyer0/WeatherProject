@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="testradarimage.gif" />
+    <Content Include="full text list plane locations.txt" />
     <Content Include="images\hailicon.png" />
     <Content Include="images\hailicon100.png" />
     <Content Include="images\hailicon125.png" />
@@ -142,6 +143,7 @@
     <Content Include="images\hailicon300.png" />
     <Content Include="images\hailicon400.png" />
     <Content Include="images\hailicon500.png" />
+    <Content Include="images\planeicon.png" />
     <Content Include="images\radaricon.png" />
     <Content Include="images\toricon.png" />
     <Content Include="images\windicon.png" />
