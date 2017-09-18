@@ -28,10 +28,6 @@ namespace WeatherRadar
             EffetiveTxt.Text = _alertPopupRow["effective"].ToString();
             ExpiresTxt.Text = _alertPopupRow["expires"].ToString();
             textBox1.Text = _alertPopupRow["areaDesc"].ToString();
-
-
         }
-
-
     }
 }

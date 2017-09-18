@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
@@ -33,9 +32,7 @@ namespace WeatherRadar
             using (WebClient client = new WebClient())
             {
                 flightLoc = client.DownloadString("http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?lat=38.79797&lng=-97.64008&fDstL=0&fDstU=300");
-                //flightLoc = File.ReadAllText(@"C:\Users\Boyer\documents\visual studio 2017\Projects\WeatherRadar\WeatherRadar\full text list plane locations.txt");
-
-             
+                //flightLoc = File.ReadAllText(@"C:\Users\Boyer\documents\visual studio 2017\Projects\WeatherRadar\WeatherRadar\full text list plane locations.txt");      
             }
             //https://thenounproject.com/term/cessna/182330/
             Image planeImage = Image.FromFile("C:\\Users\\Boyer\\documents\\visual studio 2017\\Projects\\WeatherRadar\\WeatherRadar\\images\\planeicon.png");
@@ -45,13 +42,14 @@ namespace WeatherRadar
             flightDataSet.ReadXml(new XmlNodeReader(flightXml));
             DataTable flightTable = new DataTable();
             flightTable = flightDataSet.Tables[0];
-            Debug.WriteLine(flightTable);
             Regex reg = new Regex(@"KSU[0-9]");
             foreach (DataRow row in flightTable.Rows)
             {
                 string teststring = row["Call"].ToString();
+                Debug.WriteLine(row["call"]);
                 if (reg.IsMatch(teststring))
                 {
+                   // Debug.WriteLine(row["call"]);
                     GMapMarker marker = new GMarkerGoogle(
                               new PointLatLng(Convert.ToDouble(row["Lat"]), Convert.ToDouble(row["Long"])), planeBitmap);
                     marker.ToolTipText = "Call: " + row["Call"] + "\nModel: " + row["Mdl"] + "\nAltitude: " + row["Alt"] + "\nSpeed: " + row["Spd"] + "\nTrack: " + row["Trak"];
@@ -66,4 +64,3 @@ namespace WeatherRadar
         }          
     }
 }
-
