@@ -51,6 +51,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.flightLbl = new System.Windows.Forms.Label();
             this.ksuCheckBox = new System.Windows.Forms.CheckBox();
+            this.RadarBox = new System.Windows.Forms.CheckBox();
+            this.radarOpacitySlider = new System.Windows.Forms.HScrollBar();
+            this.radarOpacityLbl = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -220,6 +223,7 @@
             this.gmap.Zoom = 8D;
             this.gmap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
             this.gmap.OnPolygonClick += new GMap.NET.WindowsForms.PolygonClick(this.gmap_OnPolygonClick);
+            this.gmap.OnMapZoomChanged += new GMap.NET.MapZoomChanged(this.gmap_OnMapZoomChanged);
             this.gmap.Load += new System.EventHandler(this.gMapControl1_Load);
             // 
             // WindcheckBox1
@@ -291,11 +295,44 @@
             this.ksuCheckBox.UseVisualStyleBackColor = false;
             this.ksuCheckBox.CheckStateChanged += new System.EventHandler(this.ksuCheckBox_CheckStateChanged);
             // 
+            // RadarBox
+            // 
+            this.RadarBox.AutoSize = true;
+            this.RadarBox.Location = new System.Drawing.Point(663, 32);
+            this.RadarBox.Name = "RadarBox";
+            this.RadarBox.Size = new System.Drawing.Size(101, 21);
+            this.RadarBox.TabIndex = 10;
+            this.RadarBox.Text = "Test Radar";
+            this.RadarBox.UseVisualStyleBackColor = true;
+            this.RadarBox.CheckStateChanged += new System.EventHandler(this.RadarBox_CheckStateChanged);
+            // 
+            // radarOpacitySlider
+            // 
+            this.radarOpacitySlider.Location = new System.Drawing.Point(958, 32);
+            this.radarOpacitySlider.Name = "radarOpacitySlider";
+            this.radarOpacitySlider.Size = new System.Drawing.Size(128, 21);
+            this.radarOpacitySlider.SmallChange = 10;
+            this.radarOpacitySlider.TabIndex = 11;
+            this.radarOpacitySlider.Value = 100;
+            this.radarOpacitySlider.ValueChanged += new System.EventHandler(this.radarOpacitySlider_ValueChanged);
+            // 
+            // radarOpacityLbl
+            // 
+            this.radarOpacityLbl.AutoSize = true;
+            this.radarOpacityLbl.Location = new System.Drawing.Point(846, 33);
+            this.radarOpacityLbl.Name = "radarOpacityLbl";
+            this.radarOpacityLbl.Size = new System.Drawing.Size(99, 17);
+            this.radarOpacityLbl.TabIndex = 12;
+            this.radarOpacityLbl.Text = "Radar Opacity";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1902, 1033);
+            this.Controls.Add(this.radarOpacityLbl);
+            this.Controls.Add(this.radarOpacitySlider);
+            this.Controls.Add(this.RadarBox);
             this.Controls.Add(this.ksuCheckBox);
             this.Controls.Add(this.flightLbl);
             this.Controls.Add(this.label1);
@@ -344,6 +381,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label flightLbl;
         private System.Windows.Forms.CheckBox ksuCheckBox;
+        private System.Windows.Forms.CheckBox RadarBox;
+        private System.Windows.Forms.HScrollBar radarOpacitySlider;
+        private System.Windows.Forms.Label radarOpacityLbl;
     }
 }
 

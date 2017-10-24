@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net;
 using System.Data;
 using System.Xml;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.IO;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using GMap.NET.MapProviders;
 
 namespace WeatherRadar
 {

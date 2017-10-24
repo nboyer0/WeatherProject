@@ -36,7 +36,9 @@ namespace WeatherRadar
         StormReport storms;
         ActiveAlerts alerts = new ActiveAlerts();
         PlaneLocations planes = new PlaneLocations();
-       
+        Radar radar;
+        
+
         public MainForm()
         {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace WeatherRadar
 
         private void gMapControl1_Load(object sender, EventArgs e)
         {
+            radar = new Radar(gmap);
             gmap.MapProvider = GoogleMapProvider.Instance;
             GMaps.Instance.Mode = AccessMode.ServerAndCache;
             gmap.SetPositionByKeywords("Wichita, United States");
@@ -97,6 +100,9 @@ namespace WeatherRadar
             alerts.getAlerts();
             gmap.Overlays.Add(alerts.activeAlertsOverlay);
             UpdateRoutine();
+
+            //temp code
+            RadarBox.Checked = true;
         }
 
 
@@ -203,6 +209,17 @@ namespace WeatherRadar
         {
             gmap.Position = new GMap.NET.PointLatLng(x, y);
         }
+        public int getMapRatio()
+        {
+            double resolution = gmap.MapProvider.Projection.GetGroundResolution((int)gmap.Zoom, gmap.Position.Lat);
+            int imagesize = (int)(800000 / resolution);
+            return imagesize;
+        }
+
+
+
+
+
         public void setMapSettings (string mapProvider, string AMode)
         {
             switch (mapProvider)
@@ -359,100 +376,143 @@ namespace WeatherRadar
             }
 
         }
+
+        private void gmap_OnMapZoomChanged()
+        {
+            //check current zoom level and change radar image size and offset values.
+            //Zoom levels 5-18
+            //change position.lat to radar position lat
+            //distance in meters per pixel
+            //image is 400 km away from radar
+            //800km total = 800000 meters
+
+            //meters/pixel
+            //800000/x = resolution/1
+            //800000/resolution = sizeofimage
+            radar.zoomChange(getMapRatio());
+        }
+
+
+
+
+
+private void RadarBox_CheckStateChanged(object sender, EventArgs e)
+{
+if(RadarBox.Checked)
+{
+     radar.startRadar(getMapRatio());
+
+}
+else
+{
+
+
+
+}
+
+
+}
+
+        private void radarOpacitySlider_ValueChanged(object sender, EventArgs e)
+        {
+            radar.updateOpacityValue(radarOpacitySlider.Value);
+            radar.updateOpacityImage();
+        }
+
         private void dayToolStripMenuItem1_Click(object sender, EventArgs e)
+{
+if (Day2Outlook)
+{
+    outlookReset();
+}
+else
+{
+    if (Day1Outlook || Day2Outlook || Day3Outlook)
+    { outlookReset(); }
+    Day2Outlook = true;
+    getSPCOutlooks("Day2");
+    //doesn't refresh right
+    gmap.Refresh();
+    this.dayToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+}
+}
+
+private void dayToolStripMenuItem2_Click(object sender, EventArgs e)
+{
+if (Day3Outlook)
+{
+    outlookReset();
+}
+else
+{ 
+    if(Day1Outlook||Day2Outlook||Day3Outlook)
+    { outlookReset(); }
+    Day3Outlook = true;
+    getSPCOutlooks("Day3");
+    //doesn't refresh right
+    gmap.Refresh();
+    this.dayToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
+}
+}
+
+private void outlookReset()
+{
+this.dayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Unchecked;
+this.dayToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Unchecked;
+this.dayToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Unchecked;
+//gmap.Overlays.Add(TSTMGrid.outlookGridOverlay);
+gmap.Overlays.Remove(MRGLGrid.outlookGridOverlay);
+gmap.Overlays.Remove(SLGTGrid.outlookGridOverlay);
+gmap.Overlays.Remove(ENHGrid.outlookGridOverlay);
+gmap.Overlays.Remove(MDTGrid.outlookGridOverlay);
+gmap.Overlays.Remove(HIGHGrid.outlookGridOverlay);
+Day1Outlook = false;
+Day2Outlook = false;
+Day3Outlook = false;
+gmap.Refresh();
+
+}
+
+//background methods
+private void UpdateRoutine()
+{
+//https://stackoverflow.com/questions/4409558/timer-run-every-5th-minute
+//https://msdn.microsoft.com/en-us/library/2x96zfy7(v=vs.110).aspx
+var startTimeSpan = TimeSpan.Zero;
+    var periodTimeSpan = TimeSpan.FromMinutes(1);
+    var timer = new System.Threading.Timer((e) =>
+    {
+        if (ksuCheckBox.Checked)
         {
-            if (Day2Outlook)
-            {
-                outlookReset();
-            }
-            else
-            {
-                if (Day1Outlook || Day2Outlook || Day3Outlook)
-                { outlookReset(); }
-                Day2Outlook = true;
-                getSPCOutlooks("Day2");
-                //doesn't refresh right
-                gmap.Refresh();
-                this.dayToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
-            }
+            //updates planes
+            gmap.Overlays.Remove(planes.PlaneMarkers);
+            planes.PlaneMarkers.Clear();
+            planes.getPlaneLocations();
+            gmap.Overlays.Add(planes.PlaneMarkers);
         }
 
-        private void dayToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            if (Day3Outlook)
-            {
-                outlookReset();
-            }
-            else
-            { 
-                if(Day1Outlook||Day2Outlook||Day3Outlook)
-                { outlookReset(); }
-                Day3Outlook = true;
-                getSPCOutlooks("Day3");
-                //doesn't refresh right
-                gmap.Refresh();
-                this.dayToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Checked;
-            }
-        }
+        //update active warning
+        gmap.Overlays.Remove(alerts.activeAlertsOverlay);
+        alerts.activeAlertsOverlay.Clear();
+        alerts.getAlerts();
+        gmap.Overlays.Add(alerts.activeAlertsOverlay);
+        //Threading issue, can't update gmap from thread different than it was created on
+        //UpdateMap();
+        Debug.WriteLine("Updated");
 
-        private void outlookReset()
-        {
-            this.dayToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            this.dayToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            this.dayToolStripMenuItem2.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            //gmap.Overlays.Add(TSTMGrid.outlookGridOverlay);
-            gmap.Overlays.Remove(MRGLGrid.outlookGridOverlay);
-            gmap.Overlays.Remove(SLGTGrid.outlookGridOverlay);
-            gmap.Overlays.Remove(ENHGrid.outlookGridOverlay);
-            gmap.Overlays.Remove(MDTGrid.outlookGridOverlay);
-            gmap.Overlays.Remove(HIGHGrid.outlookGridOverlay);
-            Day1Outlook = false;
-            Day2Outlook = false;
-            Day3Outlook = false;
-            gmap.Refresh();
-
-        }
-
-        //background methods
-        private void UpdateRoutine()
-        {
-            //https://stackoverflow.com/questions/4409558/timer-run-every-5th-minute
-            //https://msdn.microsoft.com/en-us/library/2x96zfy7(v=vs.110).aspx
-            var startTimeSpan = TimeSpan.Zero;
-                var periodTimeSpan = TimeSpan.FromMinutes(1);
-                var timer = new System.Threading.Timer((e) =>
-                {
-                    if (ksuCheckBox.Checked)
-                    {
-                        //updates planes
-                        gmap.Overlays.Remove(planes.PlaneMarkers);
-                        planes.PlaneMarkers.Clear();
-                        planes.getPlaneLocations();
-                        gmap.Overlays.Add(planes.PlaneMarkers);
-                    }
-
-                    //update active warning
-                    gmap.Overlays.Remove(alerts.activeAlertsOverlay);
-                    alerts.activeAlertsOverlay.Clear();
-                    alerts.getAlerts();
-                    gmap.Overlays.Add(alerts.activeAlertsOverlay);
-                    //Threading issue, can't update gmap from thread different than it was created on
-                    //UpdateMap();
-                    Debug.WriteLine("Updated");
-
-                    //methods or codes to update
-                }, null, startTimeSpan, periodTimeSpan);
-          
+        //methods or codes to update
+    }, null, startTimeSpan, periodTimeSpan);
 
 
-        }
-        private void UpdateMap()
-        {
-            gmap.Refresh();
-            gmap.Update();
 
-        }
+}
+private void UpdateMap()
+{
+gmap.Refresh();
+gmap.Update();
+
+}
 
 
-    }
+}
 }
